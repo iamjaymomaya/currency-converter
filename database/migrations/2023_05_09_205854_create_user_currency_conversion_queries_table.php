@@ -18,8 +18,8 @@ return new class extends Migration
             $table->foreignId('user_id');
             $table->string('from');
             $table->string('to');
-            $table->float('amount');
-            $table->float('value')->nullable();
+            $table->decimal('amount', 12, 6);
+            $table->decimal('value', 12, 6)->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->on('users')->references('id');
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_currency_conversion_queries');
+        Schema::dropIfExists('user_currency_conversion_logs');
     }
 };
