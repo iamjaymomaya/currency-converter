@@ -21,10 +21,13 @@ class CurrencyConversionController extends Controller
         $converter = new FixerCurrencyConverter();
         try {
             $user = Auth::user();
+            
             $userQuery = $user->persistConversionQuery($request->amount, $request->from, $request->to);
-            // $response = $converter->convert($request->amount, $request->from, $request->to);
-            $response = 500;
+            
+            $response = $converter->convert($request->amount, $request->from, $request->to);
+            
             $user->updateResponse($userQuery, $response);
+
             return response()->json(['value' => $response]);
         } catch (\Throwable $th) {
             return response()->json($th->getMessage(), 500);
@@ -32,6 +35,6 @@ class CurrencyConversionController extends Controller
     }
 
     public function currencyConversionLogs() {
-        return Auth::user()->userCurrencyConversionLogs;
+        return Auth::user()->userCurrencyConversionLogsInDesc;
     }
 }

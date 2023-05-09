@@ -72,4 +72,8 @@ class User extends Authenticatable
     public function userCurrencyConversionLogs() {
         return $this->hasMany(UserCurrencyConversionLog::class);
     }
+
+    public function userCurrencyConversionLogsInDesc() {
+        return $this->hasMany(UserCurrencyConversionLog::class)->orderBy('id', 'desc');
+    }
 }

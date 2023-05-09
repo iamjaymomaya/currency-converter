@@ -70,6 +70,26 @@
                 </div>
             </div>
         </form>
+        <hr>
+        <div class="row justify-content-md-center mt-5">
+            <div class="col-md-12 text-center">
+                <h3>History</h3>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table" id="table_history">
+                <thead>
+                    <th class='text-center'>Sr No.</th>
+                    <th class='text-center'>Amount</th>
+                    <th class='text-center'>From</th>
+                    <th class='text-center'>To</th>
+                    <th class='text-center'>Rate</th>
+                    <th class='text-center'>Request Datetime</th>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
     </div>
 @endsection
 @push('scripts')
@@ -104,6 +124,37 @@
             $('#loading').addClass('d-none');
         }
 
+        function getUserCurrencyConversionLogs() {
+            $('#table_history').find('tbody').empty();
+            $.ajax({
+                url: "{{ route('get-currency-conversion-logs') }}",
+                method: 'GET',
+                success: function(res) {
+                    if(res && res.length == 0) {
+                        let tr = "<tr>";
+                        tr += "<td colspan='6' class='text-center'>No Records found </td>";
+                        tr += "</tr>";
+                        $('#table_history').find('tbody').append(tr);
+                    } else if(res && res.length > 0) {
+                        $.each(res, function(key, value) {
+                            let tr = "<tr>";
+                            tr += "<td class='text-center'>"+(res.length - key)+"</td>";
+                            tr += "<td class='text-center'>"+value['amount']+"</td>";
+                            tr += "<td class='text-center'>"+value['from']+"</td>";
+                            tr += "<td class='text-center'>"+value['to']+"</td>";
+                            tr += "<td class='text-center'>"+value['value']+"</td>";
+                            tr += "<td class='text-center'>"+value['created_at']+"</td>";
+                            tr += "</tr>";
+                            $('#table_history').find('tbody').append(tr);
+                        })
+                    }
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        }
+
         $(document).on('submit', '#form_currency_conversion', function(e) {
             e.preventDefault();
             disallowConversion();
@@ -118,15 +169,19 @@
                         $('#converted_value').val("NA")
                     }
                     allowConversion();
+                    getUserCurrencyConversionLogs();
                 },
                 error: function(error) {
                     if(error?.responseJSON?.message) {
                         alert(error?.responseJSON?.message)
                     }
                     allowConversion();
+                    getUserCurrencyConversionLogs();
                 }
             });
         })
+
+        getUserCurrencyConversionLogs();
     });
 </script>
 @endpush
