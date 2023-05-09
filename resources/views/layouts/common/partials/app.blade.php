@@ -24,5 +24,8 @@
             </div>
         </div>
         <script src="{{ asset('assets/js/bootstrap.js') }}"></script>
+        <script src="{{ asset('assets/js/jquery.js') }}"></script>
+        @yield('scripts')
+        @stack('scripts')
     </body>
 </html>
