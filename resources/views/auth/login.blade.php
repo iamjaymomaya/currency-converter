@@ -1,6 +1,7 @@
 @extends('layouts.common.partials.app')
 @section('content')
     <div class="container">
+        @include('layouts.common.partials.messages')
         <form method="post" action="{{ route('login.store') }}">
             <div class="row justify-content-md-center">
                 <div class="col-md-4 col-lg-4 col-sm-12 text-center">
@@ -30,9 +31,21 @@
                     </div>
                 </div>
             </div>
-            <div class="row justify-content-md-center">
+            <div class="row justify-content-md-center mb-2">
                 <div class="col-md-4 col-lg-4 col-sm-12">
                     <button class="w-100 btn btn-lg btn-primary" type="submit">Login</button>
+                </div>
+            </div>
+            <div class="row justify-content-md-center mb-2">
+                <div class="col-md-4 text-center">
+                    Or
+                </div>
+            </div>
+            <div class="row justify-content-md-center">
+                <div class="col-md-4 col-lg-4 col-sm-12">
+                    <a href="{{route('register.show')}}">
+                        <button class="w-100 btn btn-lg btn-warning" type="button">Register</button>
+                    </a>
                 </div>
             </div>
         </form>

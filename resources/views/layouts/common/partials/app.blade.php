@@ -20,7 +20,6 @@
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
             <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
                 <!--begin::Content wrapper-->
-                @include('layouts.common.partials.messages')
                 @yield('content')
             </div>
         </div>

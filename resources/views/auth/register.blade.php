@@ -50,9 +50,21 @@
                     </div>
                 </div>
             </div>
-            <div class="row justify-content-md-center">
+            <div class="row justify-content-md-center mb-2">
                 <div class="col-md-4 col-lg-4 col-sm-12">
                     <button class="w-100 btn btn-lg btn-primary" type="submit">Register</button>
+                </div>
+            </div>
+            <div class="row justify-content-md-center mb-2">
+                <div class="col-md-4 text-center">
+                    Or
+                </div>
+            </div>
+            <div class="row justify-content-md-center">
+                <div class="col-md-4 col-lg-4 col-sm-12">
+                    <a href="{{route('login.show')}}">
+                        <button class="w-100 btn btn-lg btn-warning" type="button">Login</button>
+                    </a>
                 </div>
             </div>
         </form>

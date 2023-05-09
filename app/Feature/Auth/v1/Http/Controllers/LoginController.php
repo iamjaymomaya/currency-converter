@@ -2,8 +2,8 @@
 
 namespace App\Feature\Auth\v1\Http\Controllers;
 
+use App\Feature\Auth\v1\Http\Requests\LoginRequest;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

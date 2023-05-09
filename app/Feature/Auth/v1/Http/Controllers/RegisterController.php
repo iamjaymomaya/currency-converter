@@ -2,8 +2,8 @@
 
 namespace App\Feature\Auth\v1\Http\Controllers;
 
+use App\Feature\Auth\v1\Http\Requests\RegisterRequest;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 
 class RegisterController extends Controller
