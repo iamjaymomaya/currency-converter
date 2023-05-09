@@ -23,6 +23,7 @@ class FixerCurrencyConversionProvider
         $query .= "from=$from&";
         $query .= "to=$to&";
         $query .= "amount=$amount";
+        return $query;
     }
 
     protected function processConversion($query) {

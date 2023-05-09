@@ -3,6 +3,7 @@
     @include('layouts.common.partials.messages')
     <div class="container">
         <form action="#" id="form_currency_conversion" class="mt-5">
+            @csrf
             <div class="row mb-5">
                 <div class="col-md-12 text-center">
                     <h3>Currency Conversion</h3>
@@ -36,7 +37,7 @@
             <div class="row justify-content-md-center">
                 <div class="col-md-2">
                     <div class="form-group form-floating mb-3">
-                        <input type="text" class="form-control" name="value" required="required" readonly>
+                        <input type="text" class="form-control" id="converted_value" name="converted_value" required="required" disabled>
                         <label for="floatingamount"></label>
                         @if ($errors->has('amount'))
                             <span class="text-danger text-left">{{ $errors->first('amount') }}</span>
@@ -59,8 +60,13 @@
                 </div>
             </div>
             <div class="row justify-content-md-center">
-                <div class="col-md-6 text-center">
-                    <button class="btn btn-success">Convert</button>
+                <div class="col-md-6 text-center align-middle">
+                    <button class="btn btn-success text-center align-middle" type="submit" id="btn_submit">
+                        <div class="spinner-border text-white d-none" role="status" id="loading">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        Convert
+                    </button>
                 </div>
             </div>
         </form>
@@ -86,13 +92,40 @@
             if(toCurrency && $('#from_currency').val() == toCurrency) {
                 $('#from_currency').val("");
             }
-            if(toCurrency) {
-                $('#from_currency').find('option[value='+toCurrency+']').attr('disabled', true);
-            }
         });
 
-        $(document).on('#form_currency_conversion', 'submit', function(e) {
+        function disallowConversion() {
+            $('#btn_submit').attr('disabled', true);
+            $('#loading').removeClass('d-none');
+        }
+
+        function allowConversion() {
+            $('#btn_submit').attr('disabled', false);
+            $('#loading').addClass('d-none');
+        }
+
+        $(document).on('submit', '#form_currency_conversion', function(e) {
             e.preventDefault();
+            disallowConversion();
+            $.ajax({
+                url: "{{ route('convert-currency') }}",
+                method: 'POST',
+                data: $('#form_currency_conversion').serialize(),
+                success: function(res) {
+                    if(res?.value) {
+                        $('#converted_value').val(res?.value)
+                    } else {
+                        $('#converted_value').val("NA")
+                    }
+                    allowConversion();
+                },
+                error: function(error) {
+                    if(error?.responseJSON?.message) {
+                        alert(error?.responseJSON?.message)
+                    }
+                    allowConversion();
+                }
+            });
         })
     });
 </script>
