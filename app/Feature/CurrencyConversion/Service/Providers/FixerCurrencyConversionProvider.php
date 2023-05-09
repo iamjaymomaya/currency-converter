@@ -13,13 +13,16 @@ class FixerCurrencyConversionProvider
     protected const DEFAULT_EXCEPTION_MESSAGE = "Something Went Wrong";
 
     public function convert($amount, $from, $to) {
+        $query = $this->createQueryForConversion($amount, $from, $to);
+        return $this->processConversion($query);
+    }
+
+    protected function createQueryForConversion($amount, $from, $to) {
         $query = "?";
         $query .= "apikey=" . env('FIXER_API_KEY') . "&";
         $query .= "from=$from&";
         $query .= "to=$to&";
         $query .= "amount=$amount";
-
-        return $this->processConversion($query);
     }
 
     protected function processConversion($query) {
