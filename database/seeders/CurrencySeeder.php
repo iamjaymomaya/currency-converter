@@ -26,6 +26,16 @@ class CurrencySeeder extends Seeder
                 'name' => 'Euro',
                 'symbol' => 'EUR',
                 'created_at' => Carbon::now()
+            ],
+            [
+                'name' => 'US Dollar',
+                'symbol' => 'USD',
+                'created_at' => Carbon::now()
+            ],
+            [
+                'name' => 'United Arab Emirates Dirham',
+                'symbol' => 'AED',
+                'created_at' => Carbon::now()
             ]
         ];
 
