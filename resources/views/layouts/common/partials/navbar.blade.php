@@ -8,7 +8,7 @@
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 @if(auth()->user())
                 <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Logout</a>
+                    <a class="nav-link" href="{{route('logout.store')}}" tabindex="-1">Logout</a>
                 </li>
                 @else
                 <li class="nav-item">
