@@ -1,5 +1,10 @@
 <?php
 
+use App\Feature\Auth\v1\Http\Controllers\LoginController;
+use App\Feature\Auth\v1\Http\Controllers\LogoutController;
+use App\Feature\Auth\v1\Http\Controllers\RegisterController;
+use App\Feature\CurrencyConversion\v1\Http\Controllers\HomeController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,7 +17,3 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});

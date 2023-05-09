@@ -35,6 +35,15 @@ class RouteServiceProvider extends ServiceProvider
 
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
+
+            Route::middleware(['web', 'auth'])
+                ->group(base_path('app/Feature/Auth/v1/Http/Routes/routes.php'));
+
+            Route::middleware(['web', 'guest'])
+                ->group(base_path('app/Feature/Auth/v1/Http/Routes/guest-routes.php'));
+
+            Route::middleware(['web', 'auth'])
+                ->group(base_path('app/Feature/CurrencyConversion/v1/Http/Routes/routes.php'));
         });
     }
 
