@@ -4,10 +4,10 @@ namespace App\Feature\CurrencyConversion\v1\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 
-class HomeController extends Controller
+class CurrencyConversionController extends Controller
 {
     public function index() 
     {
-        return view('welcome');
+        return view('currency-conversion.index');
     }
 }
