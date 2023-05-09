@@ -38,7 +38,7 @@
                 <div class="col-md-2">
                     <div class="form-group form-floating mb-3">
                         <input type="text" class="form-control" id="converted_value" name="converted_value" required="required" disabled>
-                        <label for="floatingamount"></label>
+                        <label for="floatingamount">Rate</label>
                         @if ($errors->has('amount'))
                             <span class="text-danger text-left">{{ $errors->first('amount') }}</span>
                         @endif
