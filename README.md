@@ -6,7 +6,7 @@ This app is developer by Jaykumar Momaya as assignment for Densou Interview proc
 
 ## Dependencies
 ```bash
-Php: 8
+Php: 8.0
 MySQL: 8
 Composer: 2
 Laravel: 9
