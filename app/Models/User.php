@@ -50,7 +50,7 @@ class User extends Authenticatable
         $this->attributes['password'] = bcrypt($value);
     }
 
-    public function persistConversionQuery(float $amount = 1, string $from, string $to) {
+    public function persistConversionQuery(string $from, string $to, float $amount = 1) {
         return UserCurrencyConversionLog::persist(
             [
                 'user_id' => $this->id,

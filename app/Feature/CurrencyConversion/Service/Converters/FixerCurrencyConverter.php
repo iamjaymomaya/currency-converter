@@ -6,7 +6,7 @@ use App\Feature\CurrencyConversion\Service\Providers\FixerCurrencyConversionProv
 
 class FixerCurrencyConverter implements CurrencyConverter {
     
-    public function convert(float $amount = 1, string $fromCurrencyCode, string $toCurrencyCode) {
+    public function convert(string $fromCurrencyCode, string $toCurrencyCode, float $amount = 1) {
         $provider = new FixerCurrencyConversionProvider();
         
         return $provider->convert($amount, $fromCurrencyCode, $toCurrencyCode);
