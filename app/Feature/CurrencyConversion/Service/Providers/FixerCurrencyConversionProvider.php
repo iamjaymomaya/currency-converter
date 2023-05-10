@@ -19,7 +19,7 @@ class FixerCurrencyConversionProvider
 
     protected function createQueryForConversion($amount, $from, $to) {
         $query = "?";
-        $query .= "apikey=" . env('FIXER_API_KEY') . "&";
+        $query .= "apikey=" . config('app.fixer_api_key') . "&";
         $query .= "from=$from&";
         $query .= "to=$to&";
         $query .= "amount=$amount";

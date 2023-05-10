@@ -17,6 +17,8 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'fixer_api_key' => env('FIXER_API_KEY', "VptDqknvNocBsRVAff5kSqR8UvEjIVhl"),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
