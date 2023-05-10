@@ -3,6 +3,7 @@
 namespace App\Feature\CurrencyConversion\v1\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class CurrencyConversionRequest extends FormRequest
 {
@@ -28,5 +29,10 @@ class CurrencyConversionRequest extends FormRequest
             'to' => 'required',
             'amount' => 'required|numeric|min:0.1'
         ];
+    }
+
+    public function getCacheKeyTitle() {
+        $user = Auth::user();
+        return $user->id."_".$this->from."_".$this->amount."_".$this->to;
     }
 }

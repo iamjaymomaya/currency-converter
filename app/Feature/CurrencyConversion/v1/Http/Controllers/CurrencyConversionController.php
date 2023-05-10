@@ -8,9 +8,14 @@ use App\Feature\CurrencyConversion\v1\Http\Requests\CurrencyConversionRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class CurrencyConversionController extends Controller
 {
+    const REMEMBER_USER_QUERY_CACHE_TIME_IN_SECONDS = 60;
+
+    const REMEMBER_USER_QUERY_LOGS = 600;
+
     public function index() 
     {
         $currencies = Currency::all();
@@ -23,8 +28,10 @@ class CurrencyConversionController extends Controller
             $user = Auth::user();
             
             $userQuery = $user->persistConversionQuery($request->amount, $request->from, $request->to);
-            
-            $response = $converter->convert($request->amount, $request->from, $request->to);
+            $key = $request->getCacheKeyTitle();
+            $response = Cache::remember($key, self::REMEMBER_USER_QUERY_CACHE_TIME_IN_SECONDS, function () use($converter, $request) {
+                return $converter->convert($request->amount, $request->from, $request->to);
+            });
             
             $user->updateResponse($userQuery, $response);
 
@@ -35,6 +42,10 @@ class CurrencyConversionController extends Controller
     }
 
     public function currencyConversionLogs() {
-        return Auth::user()->userCurrencyConversionLogsInDesc;
+        $key = "users_logs_" . Auth::user()->id;
+        $logs = Cache::remember($key, self::REMEMBER_USER_QUERY_LOGS, function () {
+            return Auth::user()->userCurrencyConversionLogsInDesc;
+        });
+        return $logs;
     }
 }
