@@ -27,12 +27,12 @@ class CurrencyConversionController extends Controller
         try {
             $user = Auth::user();
             
-            $userQuery = $user->persistConversionQuery($request->amount, $request->from, $request->to);
+            $userQuery = $user->persistConversionQuery($request->from, $request->to, $request->amount);
             $key = $request->getCacheKeyTitle();
             $queryLogkey = $this->getUserLogsCacheKeyTitle();
             Cache::forget($queryLogkey);
             $response = Cache::remember($key, self::REMEMBER_USER_QUERY_CACHE_TIME_IN_SECONDS, function () use($converter, $request) {
-                return $converter->convert($request->amount, $request->from, $request->to);
+                return $converter->convert($request->from, $request->to, $request->amount);
             });
             
             $user->updateResponse($userQuery, $response);
