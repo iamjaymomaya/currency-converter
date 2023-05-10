@@ -8,6 +8,7 @@ use App\Feature\CurrencyConversion\v1\Http\Requests\CurrencyConversionRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class CurrencyConversionController extends Controller
 {
@@ -23,8 +24,10 @@ class CurrencyConversionController extends Controller
             $user = Auth::user();
             
             $userQuery = $user->persistConversionQuery($request->amount, $request->from, $request->to);
-            
-            $response = $converter->convert($request->amount, $request->from, $request->to);
+            $key = $request->getCacheKeyTitle();
+            $response = Cache::remember($key, 60, function () use($converter, $request) {
+                return $converter->convert($request->amount, $request->from, $request->to);
+            });
             
             $user->updateResponse($userQuery, $response);
 
