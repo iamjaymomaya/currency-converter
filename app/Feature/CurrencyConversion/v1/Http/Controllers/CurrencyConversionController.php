@@ -29,6 +29,8 @@ class CurrencyConversionController extends Controller
             
             $userQuery = $user->persistConversionQuery($request->amount, $request->from, $request->to);
             $key = $request->getCacheKeyTitle();
+            $queryLogkey = $this->getUserLogsCacheKeyTitle();
+            Cache::forget($queryLogkey);
             $response = Cache::remember($key, self::REMEMBER_USER_QUERY_CACHE_TIME_IN_SECONDS, function () use($converter, $request) {
                 return $converter->convert($request->amount, $request->from, $request->to);
             });
@@ -42,10 +44,15 @@ class CurrencyConversionController extends Controller
     }
 
     public function currencyConversionLogs() {
-        $key = "users_logs_" . Auth::user()->id;
+        $key = $this->getUserLogsCacheKeyTitle();
         $logs = Cache::remember($key, self::REMEMBER_USER_QUERY_LOGS, function () {
             return Auth::user()->userCurrencyConversionLogsInDesc;
         });
         return $logs;
+    }
+
+    protected function getUserLogsCacheKeyTitle()
+    {
+        return "users_logs_" . Auth::user()->id;
     }
 }
